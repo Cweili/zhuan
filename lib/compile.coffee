@@ -1,12 +1,9 @@
-path = require('path')
-
 gulp = require('gulp')
 
 zhuan = require('./zhuan')
 render = require('./render')
 config = require('./config')
 $ = config.$
-argv = config.argv
 
 gulp.task('c', ['compile'])
 
