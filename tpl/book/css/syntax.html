@@ -1,0 +1,19 @@
+<div class=page-header><h1 id=CSS>CSS 语法</h1></div><p>CSS 语法非常简单，由两个主要的部分构成：</p><ul><li>选择器</li><li>一条或多条样式声明</li></ul><pre><code class="line-numbers language-css">selector {
+    property1: value1; /* 注释内容 */
+    property2: value2;
+    property3: value3;
+}
+</code></pre><p>即：</p><pre><code class="line-numbers language-css">选择器 {
+    样式属性1: 样式值1;
+    样式属性2: 样式值2;
+    样式属性3: 样式值3;
+}
+</code></pre><h2 id=CSS>CSS 的工作原理</h2><p>根据选择器匹配 HTML 元素，将为匹配到的元素设置样式。</p><p>子元素将从父元素继承部分可以被继承的样式。</p><h2 id=CSS>加入 CSS 的方法</h2><ul><li><p>使用 <code>&lt;link&gt;</code> 标签引入。</p><pre><code class="line-numbers language-html">  &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;style.css&quot; /&gt;
+</code></pre></li><li><p>使用 <code>&lt;style&gt;</code> 标签内嵌。</p><pre><code class="line-numbers language-html">  &lt;style&gt;
+      body {
+          background: #eee;
+          color: #333;
+      }
+  &lt;/style&gt;
+</code></pre></li><li><p>元素上使用 <code>style</code> 属性指定。</p><pre><code class="line-numbers language-html">  &lt;div style=&quot;background: #eee; color: #333;&quot;&gt;...&lt;/div&gt;
+</code></pre></li></ul><p><strong>为了项目的工程化管理，我们统一使用 <code>&lt;link&gt;</code> 标签引入 CSS 样式文件。</strong></p>

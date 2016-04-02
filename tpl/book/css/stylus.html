@@ -1,0 +1,430 @@
+<div class=page-header><h1 id=Stylus-Nib>Stylus 与 Nib</h1></div><p>在上一章节的练习（石英钟 2）中，我们为石英钟添加了背景的渐变色。</p><p>为了兼容一些不支持 W3C标准 CSS3 特性但拥有其私有实现的旧浏览器，我们需要在使用渐变色和 <code>background-size</code> 时增加浏览器的私有前缀 <code>-webkit-</code>、<code>-moz-</code>、<code>-o-</code>、<code>-ms-</code>。</p><pre><code class="line-numbers language-css">#container {
+  background: #232425;
+  background: -webkit-radial-gradient(#636669, #19191a);
+  background: -moz-radial-gradient(#636669, #19191a);
+  background: -o-radial-gradient(#636669, #19191a);
+  background: -ms-radial-gradient(#636669, #19191a);
+  background: radial-gradient(#636669, #19191a);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+</code></pre><p>这种写法需要给我们增加很多无谓的工作量，因此我们引入 Stylus 和 Nib 提高 CSS 编写的开发效率。</p><blockquote><p>Stylus 是一个 CSS 的预处理框架，可以创建健壮的、动态的、富有表现力的 CSS。</p><p>什么是 CSS 预处理？</p><p>CSS 预处理，是指用一种新语言用来为 CSS 增加可编程的的特性，无需考虑浏览器的兼容性问题。你可以在 CSS 中使用变量、简单的程序逻辑、函数等等在编程语言中的一些基本技巧，可以让你的 CSS 更见简洁，适应性更强。</p></blockquote><p>Stylus 默认使用 <code>.styl</code> 的作为文件扩展名，支持多样性的 CSS 语法。</p><p>引入了 Stylus 和 Nib 以后，上面那段老长老长的代码，就可以写成这样：</p><pre><code class="line-numbers language-stylus">@import &quot;nib&quot;
+
+#container
+  background: #232425
+  background: radial-gradient(#636669, #19191a)
+  background-size: cover
+</code></pre><h2 id=Stylus>Stylus 语法</h2><p>Stylus 最终是被编译成 CSS，以使浏览器能够解析。我们介绍 Stylus 的语法的同时，对比一下 Stylus 的代码与编译出的 CSS。</p><h3>基本语法</h3><ul><li><p>Stylus 使用缩进来达到定义块的目的。</p></li><li><p>可以用定义块嵌套表示层级关系，这样可以使 CSS 与 HTML 的结构更加相似。</p></li><li><p>分号、逗号、冒号均是可选的，通常我们省略分号、逗号，但保留冒号，以增强代码的可读性。</p></li></ul><p>Stylus</p><pre><code class="line-numbers language-stylus">body
+  font: 14px/1.5 Helvetica, arial, sans-serif
+
+  button
+  button.button
+  input[type=&#39;button&#39;]
+  input[type=&#39;submit&#39;]
+    border-radius: 5px
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">body {
+  font: 14px/1.5 Helvetica, arial, sans-serif;
+}
+body button,
+body button.button,
+body input[type=&#39;button&#39;],
+body input[type=&#39;submit&#39;] {
+  border-radius: 5px;
+}
+</code></pre><h3 id=code-amp-code>使用 <code>&amp;</code> 引用父选择器</h3><p>在选择器中使用 <code>&amp;</code>，可以复制一遍父选择器的内容，支持递归嵌套。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">ul
+  li a
+    display: block
+    color: blue
+    padding: 5px
+    html.ie &amp;
+      padding: 6px
+    &amp;:hover
+      color: red
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">ul li a {
+  display: block;
+  color: #00f;
+  padding: 5px;
+}
+html.ie ul li a {
+  padding: 6px;
+}
+ul li a:hover {
+  color: #f00;
+}
+</code></pre><h3>变量</h3><p>可以定义变量，并引用它，还可以进行计算。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">w = 200px
+#prompt
+  position: absolute
+  top: 150px
+  left: 50%
+  width: w
+  margin-left: -(w / 2)
+</code></pre><p>或</p><pre><code class="line-numbers language-stylus">#prompt
+  position: absolute
+  top: 150px
+  left: 50%
+  width: w = 200px
+  margin-left: -(w / 2)
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">#prompt {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+}
+</code></pre><p>也可以直接使用 <code>@</code> 来引用已经定义在当前块中的属性值。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">#prompt
+  position: absolute
+  top: 150px
+  left: 50%
+  width: 200px
+  margin-left: -(@width / 2)
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">#prompt {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+}
+</code></pre><h3>循环</h3><p>Stylus</p><pre><code class="line-numbers language-stylus">table
+  for row in 1 2 3 4 5
+    tr:nth-child({row})
+      height: 10px * row
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">table tr:nth-child(1) {
+  height: 10px;
+}
+table tr:nth-child(2) {
+  height: 20px;
+}
+table tr:nth-child(3) {
+  height: 30px;
+}
+table tr:nth-child(4) {
+  height: 40px;
+}
+table tr:nth-child(5) {
+  height: 50px;
+}
+</code></pre><p>可以通过 <code>{var}</code> 方式来引用变量值进行插值。</p><h3 id=Mixin>混入（Mixin）</h3><p>你可以理解成在 CSS 中定义函数，我们就是这样实现简化重复代码的。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">border-radius()
+  -webkit-border-radius: arguments
+  -moz-border-radius: arguments
+  border-radius: arguments
+
+button
+  border-radius: 5px 10px
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">button {
+  -webkit-border-radius: 5px 10px;
+  -moz-border-radius: 5px 10px;
+  border-radius: 5px 10px;
+}
+</code></pre><p>可以使用变量在外面改变混入产生的行为。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">vendors = webkit moz o ms official
+
+border-radius()
+  for vendor in vendors
+    if vendor == official
+      border-radius: arguments
+    else
+      -{vendor}-border-radius: arguments
+#content
+  border-radius: 5px
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">#content {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+}
+</code></pre><p>一个更复杂的混入的例子，展示了混入之间的引用，和自定义 CSS 属性的能力。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">-pos(type, args)
+  i = 0
+  position: unquote(type)
+  for j in (1..4)
+    if length(args) &gt; i
+      {args[i]}: args[i + 1] is a &#39;unit&#39; ? args[i += 1] : 0
+    i += 1
+
+fixed()
+  -pos(&#39;fixed&#39;, arguments)
+
+absolute()
+  -pos(&#39;absolute&#39;, arguments)
+
+#prompt
+  absolute: top 150px left 5px
+  width: 200px
+
+#logo
+  fixed: top left
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">#prompt {
+  position: absolute;
+  top: 150px;
+  left: 5px;
+  width: 200px;
+}
+#logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+</code></pre><h3>运算符</h3><p>Stylus 拥有非常强大的运算能力。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">body
+  // 加
+  foo: 5px + 10
+
+  // 幂
+  foo: 2 ** 8
+
+  // 自动单位转换
+  foo: 5px * 2
+
+  // 逻辑
+  foo: !!&#39;&#39;
+  foo: foo and bar and baz
+  foo: foo or bar or baz
+
+  // 范围
+  foo: 1..5
+  foo: 1...5
+
+  // 判断
+  foo: &#39;foo&#39; is a &#39;string&#39;
+  foo: (1 2 3) == (1 2 3)
+  foo: (1 2 3) == (1 2)
+  foo: ((one 1) (two 2)) == ((one 1) (two 2))
+  foo: ((one 1) (two 2)) == ((one 1) (two))
+  foo: ((one 1) (two 2))[0]
+  foo: 3 in (1 2 3 4)
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">body {
+  /* 加 */
+  foo: 15px;
+
+  /* 幂 */
+  foo: 256;
+
+  /* 自动单位转换 */
+  foo: 10px;
+
+  /* 逻辑 */
+  foo: false;
+  foo: baz;
+  foo: foo;
+
+  /* 范围 */
+  foo: 1 2 3 4 5;
+  foo: 1 2 3 4;
+
+  /* 判断 */
+  foo: true;
+  foo: true;
+  foo: false;
+  foo: true;
+  foo: false;
+  foo: one 1;
+  foo: true;
+}
+</code></pre><h3>类型推导</h3><p>Stylus 能够实现与 JavaScript 类似的类型推导，自动单位转换。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">body
+  foo: foo + bar
+  foo: &#39;foo &#39; + bar
+  foo: &#39;foo &#39; + &#39;bar&#39;
+  foo: &#39;foo &#39; + 5px
+  foo: 2s - 500ms
+  foo: 5000ms == 5s
+  foo: 50deg
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">body {
+  foo: foobar;
+  foo: &#39;foo bar&#39;;
+  foo: &#39;foo bar&#39;;
+  foo: &#39;foo 5px&#39;;
+  foo: 1.5s;
+  foo: true;
+  foo: 50deg;
+}
+</code></pre><h3>继承</h3><p>Stylus 中可以使用 <code>@extend</code> 继承任意一个已写好的样式。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">.box
+  width: 10px
+  height: @width
+
+.box-1
+  @extend .box
+  color: #000
+
+.box-2
+  @extend .box
+  color: #333
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">.box,
+.box-1,
+.box-2 {
+  width: 10px;
+  height: 10px;
+}
+.box-1 {
+  color: #000;
+}
+.box-2 {
+  color: #333;
+}
+</code></pre><p>也可以继承预定义的不输出的样式。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">$box
+  width: 10px
+  height: @width
+
+.box-1
+  @extend $box
+  color: #000
+
+.box-2
+  @extend $box
+  color: #333
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">.box-1,
+.box-2 {
+  width: 10px;
+  height: 10px;
+}
+.box-1 {
+  color: #000;
+}
+.box-2 {
+  color: #333;
+}
+</code></pre><h3>格式化输出</h3><p>与其他编程语言类似的格式化输出方式。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">body
+  foo: &#39;%s / %s&#39; % (5px 10px)
+  foo: &#39;MS:WeirdStuff(opacity=%s)&#39; % 1
+  foo: unquote(&#39;MS:WeirdStuff(opacity=1)&#39;)
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">body {
+  foo: 5px / 10px;
+  foo: MS:WeirdStuff(opacity=1);
+  foo: MS:WeirdStuff(opacity=1);
+}
+</code></pre><h3>颜色处理</h3><p>可以使用运算符或函数进行强大的颜色处理。</p><p>运算符：</p><p>Stylus</p><pre><code class="line-numbers language-stylus">body
+  foo: white - 50%
+  foo: black + 50%
+  foo: #eee - #f00
+  foo: #eee - rgba(black,.5)
+  foo: #cc0000 + 30deg
+  foo: #eee - 50%
+  foo: black + 50%
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">body {
+  foo: #808080;
+  foo: #808080;
+  foo: #0ee;
+  foo: rgba(238,238,238,0.5);
+  foo: #c60;
+  foo: #777;
+  foo: #808080;
+}
+</code></pre><p>内置颜色处理函数：</p><p>Stylus</p><pre><code class="line-numbers language-stylus">body
+  // 获取颜色通道
+  foo: red(#fc0)
+  foo: green(#fc0)
+  foo: blue(#fc0)
+  foo: alpha(#fff)
+  foo: alpha(rgba(#fff, .5))
+
+  // 颜色操作
+  foo: light(#eee)
+  foo: dark(#eee)
+  foo: dark(#333)
+  foo: darken(#eee, 50%)
+  foo: lighten(black, 50%)
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">body {
+  /* 获取颜色通道 */
+  foo: 255;
+  foo: 204;
+  foo: 0;
+  foo: 1;
+  foo: 0.5;
+
+  /* 颜色操作 */
+  foo: true;
+  foo: false;
+  foo: true;
+  foo: #777;
+  foo: #808080;
+}
+</code></pre><h3>自定义函数</h3><p>可以使用 <code>...</code> 定义可变参数函数。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">sum(nums...)
+  n = 0
+  n += num for num in nums
+
+body
+  foo: sum(1, 2, 3)
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">body {
+  foo: 6;
+}
+</code></pre><p>可以使用参数关键词来指定参数，使用 <code>=</code> 定义参数默认值。</p><p>Stylus</p><pre><code class="line-numbers language-stylus">fade-out(color, amount = 50%)
+  color - rgba(0,0,0,amount)
+
+body
+  foo: fade-out(#eee)
+  foo: fade-out(#eee, 20%)
+  foo: fade-out(#eee, amount: 50%)
+  foo: fade-out(color: #eee, amount: 50%)
+  foo: fade-out(amount: 50%, #eee)
+  foo: fade-out(amount: 50%, color: #eee)
+</code></pre><p>CSS</p><pre><code class="line-numbers language-css">body {
+  foo: rgba(238,238,238,0.5);
+  foo: rgba(238,238,238,0.8);
+  foo: rgba(238,238,238,0.5);
+  foo: rgba(238,238,238,0.5);
+  foo: rgba(238,238,238,0.5);
+  foo: rgba(238,238,238,0.5);
+}
+</code></pre><h2 id=Nib>Nib</h2><p>Nib 是一个内置极多 Stylus 混入（Mixin）的工具库。</p><p>使用 Nib 可以极大方便我们书写 CSS 样式，我们无需再自定义那些基础的混入了。</p><p>其中包含了：</p><ul><li>CSS3 样式的浏览器私有前缀</li><li>Position 的快捷方法</li><li>闭合浮动(<code>clearfix</code>)</li><li>圆角(<code>border-radius</code>)</li><li>省略号(<code>text-overflow: ellipsis</code>)</li><li>...</li></ul><p>引入它需要做的仅仅是：</p><pre><code class="line-numbers language-stylus">@import &quot;nib&quot;
+</code></pre><h2 id=Stylus-Nib>练习（石英钟 - Stylus 与 Nib）</h2><p>在 CodePen.io 中使用 Stylus，我们可以通过点击 CSS 输入框左上角的齿轮，进入 CSS 配置，在 <code>CSS Preprocessor</code> 项目中选择 Stylus。</p><h3 id=Nib>引入 Nib</h3><pre><code class="line-numbers language-stylus">@import &quot;nib&quot;
+</code></pre><h3>定义继承和混入</h3><p>我们定义一些用于继承和混入的样式，方便在后面的代码中直接调用 <code>rectangle-center</code> 来创建绝对定位上下左右居中的元素。</p><pre><code class="line-numbers language-stylus">$absolute-center
+  absolute: top 50% left 50%
+
+rectangle-center(width, height = width)
+  width: width
+  height: height
+  margin: (height / -2) 0 0 (width / -2)
+  @extend $absolute-center
+</code></pre><h3>背景</h3><pre><code class="line-numbers language-stylus">#container
+  absolute: top 0 bottom 0 left 0 right 0
+  background: #232425
+  background: radial-gradient(@background + 30%, @background - 30%)
+  background-size: cover
+  font: 14px/1.4 &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif
+</code></pre><h3>石英钟主体（外壳、表盘外框、表盘）</h3><pre><code class="line-numbers language-stylus">#clock
+  rectangle-center: 26em
+  background: linear-gradient(to bottom, #f9f9f9,#666)
+  &amp;::before
+    content: &quot;&quot;
+    rectangle-center: 24em
+    background: linear-gradient(140deg, #f6f8f9 0%, #e5ebee 50%, #cdd4d9 51%, #f5f7f9 100%)
+    background-size: cover
+  &amp;::after
+    content: &quot;&quot;
+    rectangle-center: 23em
+    background: linear-gradient(to bottom, #fff, #ccc)
+    border: .1em solid rgba(#000, .2)
+</code></pre><h3>最终效果</h3><p><style>#clock,#clock-1,#clock-2{position:absolute;top:50%;left:50%}#container{position:absolute;top:0;bottom:0;left:0;right:0;background:#232425;background:-webkit-radial-gradient(#636669,#19191a);background:-moz-radial-gradient(#636669,#19191a);background:-o-radial-gradient(#636669,#19191a);background:-ms-radial-gradient(#636669,#19191a);background:radial-gradient(#636669,#19191a);-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;font:14px/1.4 Helvetica,Arial,sans-serif}#clock{width:26em;height:26em;margin:-13em 0 0 -13em;background:#f9f9f9;background:-webkit-linear-gradient(top,#f9f9f9,#666);background:-moz-linear-gradient(top,#f9f9f9,#666);background:-o-linear-gradient(top,#f9f9f9,#666);background:-ms-linear-gradient(top,#f9f9f9,#666);background:linear-gradient(to bottom,#f9f9f9,#666)}#clock-1{width:24em;height:24em;margin:-12em 0 0 -12em;background:-webkit-linear-gradient(310deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);background:-moz-linear-gradient(310deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);background:-o-linear-gradient(310deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);background:-ms-linear-gradient(310deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);background:linear-gradient(140deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);-webkit-background-size:cover;-moz-background-size:cover;background-size:cover}#clock-2{width:23em;height:23em;margin:-11.5em 0 0 -11.5em;background:-webkit-linear-gradient(top,#fff,#ccc);background:-moz-linear-gradient(top,#fff,#ccc);background:-o-linear-gradient(top,#fff,#ccc);background:-ms-linear-gradient(top,#fff,#ccc);background:linear-gradient(to bottom,#fff,#ccc);border:.1em solid rgba(0,0,0,.2)}</style></p><div style=position:relative;width:100%;height:500px><div id=container><div id=clock><div id=clock-1></div><div id=clock-2></div></div></div></div><h3>本次完整代码</h3><p>HTML（未改变）</p><pre><code class="line-numbers language-html">&lt;div id=&quot;container&quot;&gt;
+  &lt;div id=&quot;clock&quot;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>Stylus</p><pre><code class="line-numbers language-stylus">@import &quot;nib&quot;
+
+$absolute-center
+  absolute: top 50% left 50%
+
+rectangle-center(width, height = width)
+  width: width
+  height: height
+  margin: (height / -2) 0 0 (width / -2)
+  @extend $absolute-center
+
+#container
+  absolute: top 0 bottom 0 left 0 right 0
+  background: #232425
+  background: radial-gradient(@background + 30%, @background - 30%)
+  background-size: cover
+  font: 14px/1.4 &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif
+
+#clock
+  rectangle-center: 26em
+  background: linear-gradient(to bottom, #f9f9f9, #666)
+  &amp;::before
+    content: &quot;&quot;
+    rectangle-center: 24em
+    background: linear-gradient(140deg, #f6f8f9 0%, #e5ebee 50%, #cdd4d9 51%, #f5f7f9 100%)
+    background-size: cover
+  &amp;::after
+    content: &quot;&quot;
+    rectangle-center: 23em
+    background: linear-gradient(to bottom, #fff, #ccc)
+    border: .1em solid rgba(#000, .2)
+</code></pre><p>是不是比直接写 CSS 简洁方便多了。</p><h2>可用资源</h2><ul><li><a href="http://www.zhangxinxu.com/jq/stylus/">Stylus 中文文档</a></li><li><a href="http://tj.github.io/nib/">Nib 文档</a></li></ul>

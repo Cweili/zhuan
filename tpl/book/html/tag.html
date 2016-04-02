@@ -1,0 +1,11 @@
+<div class=page-header><h1 id=HTML>HTML 标签</h1></div><ul><li><p>标签由英文尖括号 <code>&lt;</code> 和 <code>&gt;</code> 括起来，如 <code>&lt;html&gt;</code> 就是一个标签。</p></li><li><p>html中的标签一般都是成对出现的，分开始标签和结束标签。结束标签比开始标签多了一个 <code>/</code>。</p><p>如：</p><pre><code class="line-numbers language-html">  &lt;p&gt;段落&lt;/p&gt;
+  &lt;div&gt;层&lt;/div&gt;
+  &lt;span&gt;行内文本&lt;/span&gt;
+</code></pre></li><li><p>也有部分标签是没有另一对的，我们称之为<strong>自闭合标签</strong>，可以在标签自身结尾添加 <code>/</code> 结束标签。</p><p>如：</p><pre><code class="line-numbers language-html">  &lt;img src=&quot;图片.jpg&quot; alt=&quot;图片标题&quot; /&gt;
+  &lt;input type=&quot;text&quot; name=&quot;textInput&quot; placeholder=&quot;文本输入框&quot; /&gt;
+</code></pre></li><li><p>标签与标签之间是可以嵌套的，但先后顺序必须保持一致，如：<code>&lt;div&gt;</code> 里嵌套 <code>&lt;p&gt;</code>，那么 <code>&lt;/p&gt;</code> 必须放在 <code>&lt;/div&gt;</code> 的前面。</p><p>如：</p><pre><code class="line-numbers language-html">  &lt;div&gt;
+      &lt;p&gt;
+          &lt;span&gt;行内文本&lt;/span&gt;
+      &lt;/p&gt;
+  &lt;/div&gt;
+</code></pre></li><li><p>HTML 标签不区分大小写，<code>&lt;h1&gt;</code> 和 <code>&lt;H1&gt;</code> 是一样的，但我们要求为<strong>全部小写</strong>，这是为了便于模板管理以及其他框架的解析。</p></li></ul><ul><li><p>标签中可以指定属性 <code>&lt;a href=&quot;超链接地址&quot;&gt;超链接&lt;/a&gt;</code>。</p></li><li><p>标签可以添加 <code>id</code> 属性来指定该标签在页面内唯一的 <code>id</code>。</p></li></ul>

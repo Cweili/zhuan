@@ -1,0 +1,23 @@
+<div class=page-header><h1 id=CSS>CSS 优先级</h1></div><h2>计算方法</h2><p>优先级是根据由每种选择器类型构成的级联字串计算而成的。 它不是一个对应相应匹配表达式的权重。</p><p>如果优先级相同,元素最终会应用 CSS 中靠后的声明。</p><p>另外，在文档树中的距离是不会对元素优先级计算产生影响的。</p><p>整体上，遵循以下的规则优先级逐级增加：</p><ol><li>通用选择器 <code>*</code></li><li>元素(类型)选择器</li><li>类选择器</li><li>属性选择器</li><li>伪类</li><li>ID 选择器</li><li>内联样式</li></ol><p>元素还可以从父元素上继承一些样式，如color等属性。这些继承的样式的优先级永远低于元素本身的样式，包括通用选择器：</p><pre><code class="line-numbers language-html">&lt;div id=&quot;test&quot;&gt;
+    &lt;a href=&quot;#&quot;&gt;text&lt;/a&gt;
+&lt;/div&gt;
+</code></pre><pre><code class="line-numbers language-css">* {
+    color: red;
+}
+
+#test {
+    color: blue;
+}
+</code></pre><p>最终 text 的颜色是红色的。</p><h4 id=code-important-code><code>!important</code> 规则是例外</h4><p>当 <code>!important</code> 规则被应用在一个样式声明中时，该样式声明会覆盖 CSS 中任何其他的声明, 无论它处在声明列表中的哪个位置。</p><p><strong>注意</strong>：</p><ul><li>使用 <code>!important</code> 不是一个好习惯，因为它改变了你样式表本来的级联规则，从而难以调试。</li></ul><h2 id=CSS>利用 CSS 优先级</h2><p>更多的使用适合的选择器。比如在你需要选定的对象元素前加上更多的元素，使选择的范围缩小，你的选择器就变得更有针对性，从而提高优先级：</p><pre><code class="line-numbers language-html">&lt;div id=&quot;test&quot;&gt;
+  &lt;span&gt;Text&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><pre><code class="line-numbers language-css">div#test span {
+    color: green;
+}
+span {
+    color: red;
+}
+div span {
+    color: blue;
+}
+</code></pre><p>无论你 CSS 语句的顺序是什么样的，文本都会是绿色的(green)因为这一条规则是最有特殊性、优先级最高的。</p><p>同理，无论语句顺序怎样，蓝色(blue)的规则都会覆盖红色(red)的规则。</p>

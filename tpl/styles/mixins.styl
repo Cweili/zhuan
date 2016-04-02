@@ -1,0 +1,24 @@
+//
+// Mixins
+// --------------------------------------------------
+
+@import "bootstrap/mixins"
+
+@import "nib"
+
+aspect-ratio($width, $height)
+  position: relative
+  &:before
+    display: block
+    content: ""
+    width: 100%
+    padding-top: ($height / $width) * 100%
+
+$cover
+  background-position: 50%
+  background-repeat: no-repeat
+  background-size: cover
+
+$absolute-vertical-middle
+  absolute: top 50%
+  transform: translate(0, -50%)

@@ -1,0 +1,104 @@
+<div class=page-header><h1 id=CSS>CSS 变形</h1></div><p>CSS3 中新增了变形，配合过渡和动画，使我们可以制作出各种强大的动态效果。</p><p>在 CSS3 中 <code>transform</code> 主要包括以下几种：旋转 <code>rotate</code>、扭曲 <code>skew</code>、缩放 <code>scale</code> 和位移 <code>translate</code> 以及矩阵变形 <code>matrix</code>。</p><p>变形又分为 2D 变形与 3D 变形，区别在于：</p><ul><li>2D 变形基于 x、y 轴，3D 变形基于 x、y、z 轴；</li><li>2D 变形渲染通常由 CPU 计算完成，3D 变形渲染通常由 GPU 计算完成。</li><li>2D 变形在移动设备上的兼容性较好</li><li>3D 变形在PC上的性能较好</li></ul><p>CSS3 的变形是一个非常强大的属性，包含的知识点也比较多，在此推荐以下几篇文章，对 CSS3 变形的介绍非常详尽：</p><ul><li><a href=http://www.w3cplus.com/css3/css3-2d-transform.html>CSS3 2D Transform</a></li><li><a href=http://www.w3cplus.com/css3/css3-3d-transform.html>CSS3 3D Transform</a></li><li><a href=http://www.w3cplus.com/css3/transform-origin.html>CSS3 Transform——transform-origin</a></li><li><a href=http://www.w3cplus.com/css3/transform-basic-property.html>Transform-style和Perspective属性</a></li></ul><p>对于 3D 变形不太明白而且口味略重的话可以看张鑫旭的这篇文章，写的比较浅显易懂些：</p><ul><li><a href="http://www.zhangxinxu.com/wordpress/2012/09/css3-3d-transform-perspective-animate-transition/">好吧，CSS3 3D transform变换，不过如此！</a></li></ul><p><strong>注意</strong>：</p><ul><li>CSS3 形变就是让浏览器将目标元素放在指定位置重新渲染显示，元素本身所占据的位置与空间还是原来的。</li><li>同时定义多个形变时，不同的先后顺序是有区别的，浏览器将依给定顺序去渲染。</li></ul><h2 id=CSS>练习（石英钟 - CSS 变形）</h2><p>我们本次为石英钟添加需要变形的部分。</p><h3>指针</h3><p>石英钟的指针需要使用旋转 <code>rotate</code> 完成不同时间的指示。</p><p><style>#clock,#clock-1,#clock-2,#second .outer-2,.hand,.mark-hour,.mark-hour .mark-minute-1-1,.mark-hour .mark-minute-1-2,.mark-hour .mark-minute-2-1,.mark-hour .mark-minute-2-2,.mark-hour-1,.pane{position:absolute;top:50%;left:50%}#container{position:absolute;top:0;bottom:0;left:0;right:0;background:#232425;background:-webkit-radial-gradient(#636669,#19191a);background:-moz-radial-gradient(#636669,#19191a);background:-o-radial-gradient(#636669,#19191a);background:-ms-radial-gradient(#636669,#19191a);background:radial-gradient(#636669,#19191a);-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;font:14px/1.4 Helvetica,Arial,sans-serif}#clock{width:26em;height:26em;margin:-13em 0 0 -13em;background:#f9f9f9;background:-webkit-linear-gradient(top,#f9f9f9,#666);background:-moz-linear-gradient(top,#f9f9f9,#666);background:-o-linear-gradient(top,#f9f9f9,#666);background:-ms-linear-gradient(top,#f9f9f9,#666);background:linear-gradient(to bottom,#f9f9f9,#666);-webkit-border-radius:2em;border-radius:2em;-webkit-box-shadow:.3em .5em 2em #333,inset 0 0 2em rgba(221,221,221,.4),inset 0 -.2em .2em rgba(0,0,0,.3);box-shadow:.3em .5em 2em #333,inset 0 0 2em rgba(221,221,221,.4),inset 0 -.2em .2em rgba(0,0,0,.3)}#clock-1{width:24em;height:24em;margin:-12em 0 0 -12em;background:-webkit-linear-gradient(310deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);background:-moz-linear-gradient(310deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);background:-o-linear-gradient(310deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);background:-ms-linear-gradient(310deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);background:linear-gradient(140deg,#f6f8f9 0,#e5ebee 50%,#cdd4d9 51%,#f5f7f9 100%);-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;-webkit-border-radius:12em;border-radius:12em;-webkit-box-shadow:.1em .3em 1em rgba(51,51,51,.2);box-shadow:.1em .3em 1em rgba(51,51,51,.2)}#clock-2{width:23em;height:23em;margin:-11.5em 0 0 -11.5em;background:-webkit-linear-gradient(top,#fff,#ccc);background:-moz-linear-gradient(top,#fff,#ccc);background:-o-linear-gradient(top,#fff,#ccc);background:-ms-linear-gradient(top,#fff,#ccc);background:linear-gradient(to bottom,#fff,#ccc);border:.1em solid rgba(0,0,0,.2);-webkit-border-radius:12.5em;border-radius:12.5em;-webkit-box-shadow:inset rgba(0,0,0,.2) .2em .2em 1em,inset 12em 14em 0 -10em rgba(255,255,255,.3);box-shadow:inset rgba(0,0,0,.2) .2em .2em 1em,inset 12em 14em 0 -10em rgba(255,255,255,.3)}.pane{z-index:3;width:16em;height:16em;margin:-8em 0 0 -8em}.inner,.outer{width:100%;height:100%}.hand{-webkit-box-shadow:rgba(0,0,0,.8) 0 0 .2em;box-shadow:rgba(0,0,0,.8) 0 0 .2em}#hour .hand{width:.6em;height:4em;margin:-4em -.3em 0;-webkit-border-radius:.5em .5em 0 0/4em 4em 0 0;border-radius:.5em .5em 0 0/4em 4em 0 0;background:#333}#minute .hand{width:.3em;height:7em;margin:-7em -.15em 0;-webkit-border-radius:.5em .5em 0 0/7em 7em 0 0;border-radius:.5em .5em 0 0/7em 7em 0 0;background:#333}#second .outer-2{width:1em;height:1em;margin:-.5em 0 0 -.5em;background:#c00;-webkit-border-radius:1em;border-radius:1em;-webkit-box-shadow:rgba(0,0,0,.8) 0 0 .2em;box-shadow:rgba(0,0,0,.8) 0 0 .2em}#second .hand{width:.2em;height:11em;margin:-11em -.1em 0;-webkit-border-radius:.5em .5em 0 0/11em 11em 0 0;border-radius:.5em .5em 0 0/11em 11em 0 0;background:#c00;margin-top:-9em}#hour{-webkit-transform:rotate(30deg);transform:rotate(30deg)}#minute{-webkit-transform:rotate(160deg);transform:rotate(160deg)}#second{-webkit-transform:rotate(75deg);transform:rotate(75deg)}.mark-hour{width:4em;height:20em;margin:-10em 0 0 -2em;text-align:center;z-index:2}.mark-hour-1{width:.2em;height:.5em;margin:-.25em 0 0 -.1em;text-align:center;-webkit-box-shadow:0 -10.5em #777,0 10.5em #777;box-shadow:0 -10.5em #777,0 10.5em #777;z-index:2}.mark-hour .mark-minute-1-1,.mark-hour .mark-minute-1-2,.mark-hour .mark-minute-2-1,.mark-hour .mark-minute-2-2{width:.2em;height:.2em;margin:-.1em 0 0 -.1em;-webkit-box-shadow:0 -10.5em #777,0 10.5em #777;box-shadow:0 -10.5em #777,0 10.5em #777;z-index:2}.mark-hour .mark-minute-1-1{-webkit-transform:rotate(6deg);-moz-transform:rotate(6deg);-o-transform:rotate(6deg);-ms-transform:rotate(6deg);transform:rotate(6deg)}.mark-hour .mark-minute-1-2{-webkit-transform:rotate(-6deg);-moz-transform:rotate(-6deg);-o-transform:rotate(-6deg);-ms-transform:rotate(-6deg);transform:rotate(-6deg)}.mark-hour .mark-minute-2-1{-webkit-transform:rotate(12deg);-moz-transform:rotate(12deg);-o-transform:rotate(12deg);-ms-transform:rotate(12deg);transform:rotate(12deg)}.mark-hour .mark-minute-2-2{-webkit-transform:rotate(-12deg);-moz-transform:rotate(-12deg);-o-transform:rotate(-12deg);-ms-transform:rotate(-12deg);transform:rotate(-12deg)}.mark-hour .text-bottom,.mark-hour .text-top{line-height:2em;font-size:1.5em;color:#445;text-shadow:#667 0 .05em .1em}.mark-hour .text-bottom{margin:9.333333333333334em 0 0}#mark-hour-1{-webkit-transform:rotate(29.99999999999988deg);-moz-transform:rotate(29.99999999999988deg);-o-transform:rotate(29.99999999999988deg);-ms-transform:rotate(29.99999999999988deg);transform:rotate(29.99999999999988deg)}#mark-hour-1 .text-bottom,#mark-hour-1 .text-top{-webkit-transform:rotate(-29.99999999999988deg);-moz-transform:rotate(-29.99999999999988deg);-o-transform:rotate(-29.99999999999988deg);-ms-transform:rotate(-29.99999999999988deg);transform:rotate(-29.99999999999988deg)}#mark-hour-2{-webkit-transform:rotate(60.000000000000114deg);-moz-transform:rotate(60.000000000000114deg);-o-transform:rotate(60.000000000000114deg);-ms-transform:rotate(60.000000000000114deg);transform:rotate(60.000000000000114deg)}#mark-hour-2 .text-bottom,#mark-hour-2 .text-top{-webkit-transform:rotate(-60.000000000000114deg);-moz-transform:rotate(-60.000000000000114deg);-o-transform:rotate(-60.000000000000114deg);-ms-transform:rotate(-60.000000000000114deg);transform:rotate(-60.000000000000114deg)}#mark-hour-3{-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg);-o-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg)}#mark-hour-3 .text-bottom,#mark-hour-3 .text-top{-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-o-transform:rotate(-90deg);-ms-transform:rotate(-90deg);transform:rotate(-90deg)}#mark-hour-4{-webkit-transform:rotate(119.99999999999987deg);-moz-transform:rotate(119.99999999999987deg);-o-transform:rotate(119.99999999999987deg);-ms-transform:rotate(119.99999999999987deg);transform:rotate(119.99999999999987deg)}#mark-hour-4 .text-bottom,#mark-hour-4 .text-top{-webkit-transform:rotate(-119.99999999999987deg);-moz-transform:rotate(-119.99999999999987deg);-o-transform:rotate(-119.99999999999987deg);-ms-transform:rotate(-119.99999999999987deg);transform:rotate(-119.99999999999987deg)}#mark-hour-5{-webkit-transform:rotate(150.0000000000001deg);-moz-transform:rotate(150.0000000000001deg);-o-transform:rotate(150.0000000000001deg);-ms-transform:rotate(150.0000000000001deg);transform:rotate(150.0000000000001deg)}#mark-hour-5 .text-bottom,#mark-hour-5 .text-top{-webkit-transform:rotate(-150.0000000000001deg);-moz-transform:rotate(-150.0000000000001deg);-o-transform:rotate(-150.0000000000001deg);-ms-transform:rotate(-150.0000000000001deg);transform:rotate(-150.0000000000001deg)}#mark-hour-6{-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}#mark-hour-6 .text-bottom,#mark-hour-6 .text-top{-webkit-transform:rotate(-180deg);-moz-transform:rotate(-180deg);-o-transform:rotate(-180deg);-ms-transform:rotate(-180deg);transform:rotate(-180deg)}</style></p><div style=position:relative;width:100%;height:500px><div id=container><div id=clock><div id=clock-1></div><div id=hour class=pane><div class=outer><div class=inner><div class=hand></div></div></div></div><div id=minute class=pane><div class=outer><div class=inner><div class=hand></div></div></div></div><div id=second class=pane><div class=outer><div class=inner><div class=hand></div></div><div class=outer-2></div></div></div><div id=clock-2></div></div></div></div><pre><code class="line-numbers language-stylus">#hour
+  transform: rotate(30deg)
+#minute
+  transform: rotate(160deg)
+#second
+  transform: rotate(75deg)
+</code></pre><h3>刻度</h3><p>石英钟的刻度也需要使用到旋转，方便各个刻度在表盘上的定位。</p><p>我们开始添加数字和刻度，最终效果如下。</p><div style=position:relative;width:100%;height:500px><div id=container><div id=clock><div id=clock-1></div><div id=mark-hour-1 class=mark-hour><div class=mark-hour-1></div><div class=mark-minute-1><div class=mark-minute-1-1></div><div class=mark-minute-1-2></div></div><div class=mark-minute-2><div class=mark-minute-2-1></div><div class=mark-minute-2-2></div></div><div class=text-top>1</div><div class=text-bottom>7</div></div><div id=mark-hour-2 class=mark-hour><div class=mark-hour-1></div><div class=mark-minute-1><div class=mark-minute-1-1></div><div class=mark-minute-1-2></div></div><div class=mark-minute-2><div class=mark-minute-2-1></div><div class=mark-minute-2-2></div></div><div class=text-top>2</div><div class=text-bottom>8</div></div><div id=mark-hour-3 class=mark-hour><div class=mark-hour-1></div><div class=mark-minute-1><div class=mark-minute-1-1></div><div class=mark-minute-1-2></div></div><div class=mark-minute-2><div class=mark-minute-2-1></div><div class=mark-minute-2-2></div></div><div class=text-top>3</div><div class=text-bottom>9</div></div><div id=mark-hour-4 class=mark-hour><div class=mark-hour-1></div><div class=mark-minute-1><div class=mark-minute-1-1></div><div class=mark-minute-1-2></div></div><div class=mark-minute-2><div class=mark-minute-2-1></div><div class=mark-minute-2-2></div></div><div class=text-top>4</div><div class=text-bottom>10</div></div><div id=mark-hour-5 class=mark-hour><div class=mark-hour-1></div><div class=mark-minute-1><div class=mark-minute-1-1></div><div class=mark-minute-1-2></div></div><div class=mark-minute-2><div class=mark-minute-2-1></div><div class=mark-minute-2-2></div></div><div class=text-top>5</div><div class=text-bottom>11</div></div><div id=mark-hour-6 class=mark-hour><div class=mark-hour-1></div><div class=mark-minute-1><div class=mark-minute-1-1></div><div class=mark-minute-1-2></div></div><div class=mark-minute-2><div class=mark-minute-2-1></div><div class=mark-minute-2-2></div></div><div class=text-top>6</div><div class=text-bottom>12</div></div><div id=hour class=pane><div class=outer><div class=inner><div class=hand></div></div></div></div><div id=minute class=pane><div class=outer><div class=inner><div class=hand></div></div></div></div><div id=second class=pane><div class=outer><div class=inner><div class=hand></div></div><div class=outer-2></div></div></div><div id=clock-2></div></div></div></div><p>Jade 代码如下：</p><pre><code>#clock
+  - for (var i = 1; i &lt;= 6; i++)
+    .mark-hour(id=&#39;mark-hour-&#39; + i)
+      .mark-minute-1
+      .mark-minute-2
+      .text-top= i
+      .text-bottom= i + 6
+</code></pre><p>其中：</p><ol><li><code>.mark-hour</code> 是小时刻度，比较粗一些；</li><li><code>.mark-minute-1</code> 与 <code>.mark-minute-2</code> 的 before 和 after 伪元素用户绘制每个小时刻度左右的4个小刻度；</li><li><code>.text-top</code> 与 <code>.text-bottom</code> 是小时数字；</li><li>我们利用旋转，每次同时绘制上方与下方对应的刻度，这样仅需循环6次就可以绘制全部的12个刻度。</li></ol><p>编译出的 HTML 如下：</p><pre><code class="line-numbers language-html">&lt;div id=&quot;clock&quot;&gt;
+  &lt;div id=&quot;mark-hour-1&quot; class=&quot;mark-hour&quot;&gt;
+    &lt;div class=&quot;mark-minute-1&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;mark-minute-2&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;text-top&quot;&gt;1&lt;/div&gt;
+    &lt;div class=&quot;text-bottom&quot;&gt;7&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;mark-hour-2&quot; class=&quot;mark-hour&quot;&gt;
+    &lt;div class=&quot;mark-minute-1&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;mark-minute-2&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;text-top&quot;&gt;2&lt;/div&gt;
+    &lt;div class=&quot;text-bottom&quot;&gt;8&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;mark-hour-3&quot; class=&quot;mark-hour&quot;&gt;
+    &lt;div class=&quot;mark-minute-1&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;mark-minute-2&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;text-top&quot;&gt;3&lt;/div&gt;
+    &lt;div class=&quot;text-bottom&quot;&gt;9&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;mark-hour-4&quot; class=&quot;mark-hour&quot;&gt;
+    &lt;div class=&quot;mark-minute-1&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;mark-minute-2&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;text-top&quot;&gt;4&lt;/div&gt;
+    &lt;div class=&quot;text-bottom&quot;&gt;10&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;mark-hour-5&quot; class=&quot;mark-hour&quot;&gt;
+    &lt;div class=&quot;mark-minute-1&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;mark-minute-2&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;text-top&quot;&gt;5&lt;/div&gt;
+    &lt;div class=&quot;text-bottom&quot;&gt;11&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;mark-hour-6&quot; class=&quot;mark-hour&quot;&gt;
+    &lt;div class=&quot;mark-minute-1&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;mark-minute-2&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;text-top&quot;&gt;6&lt;/div&gt;
+    &lt;div class=&quot;text-bottom&quot;&gt;12&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>Stylus 样式代码如下：</p><pre><code class="line-numbers language-stylus">.mark-hour
+  $mark-color = #777
+  $mark-height-total = 20em
+  $mark-height-text = 2em
+  $mark-length = .5em
+  $mark-size-text = 1.5em
+  $mark-deg-min = 6deg
+  rectangle-center: 4em $mark-height-total
+  text-align: center
+  z-index: 2
+  &amp;::before
+    content: &quot;&quot;
+    rectangle-center: .2em $mark-length
+    text-align: center
+    box-shadow: 0 ($mark-height-total / -2) - $mark-length $mark-color,
+                0 ($mark-height-total / 2) + $mark-length $mark-color
+    z-index: 2
+  .mark-minute
+    &amp;-1
+    &amp;-2
+      &amp;::before
+      &amp;::after
+        content: &quot;&quot;
+        rectangle-center: .2em
+        box-shadow: 0 ($mark-height-total / -2) - $mark-length $mark-color,
+                    0 ($mark-height-total / 2) + $mark-length $mark-color
+        z-index: 2
+    &amp;-1
+      &amp;::before
+        transform: rotate($mark-deg-min)
+      &amp;::after
+        transform: rotate(- $mark-deg-min)
+    &amp;-2
+      &amp;::before
+        transform: rotate($mark-deg-min * 2)
+      &amp;::after
+        transform: rotate($mark-deg-min * -2)
+  .text-top
+  .text-bottom
+    line-height: $mark-height-text
+    font-size: 1.5em
+    color: #445
+    text-shadow: #667 0 .05em .1em
+  .text-bottom
+    margin: (($mark-height-total - ($mark-height-text * $mark-size-text * 2)) / $mark-size-text) 0 0
+
+for hour in 1..6
+  #mark-hour-{hour}
+    transform: rotate((hour / 12) * 360deg)
+    .text-top
+    .text-bottom
+      transform: rotate((hour / 12) * -360deg)
+</code></pre>

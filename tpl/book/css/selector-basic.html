@@ -1,0 +1,94 @@
+<div class=page-header><h1>基础选择器</h1></div><h2>例子</h2><p>首先给出一段 HTML</p><pre><code class="line-numbers language-html">&lt;div class=&quot;demo&quot;&gt;
+    &lt;ul class=&quot;clearfix&quot;&gt;
+        &lt;li id=&quot;first&quot; class=&quot;first&quot;&gt;1&lt;/li&gt;
+        &lt;li class=&quot;active important&quot;&gt;2&lt;/li&gt;
+        &lt;li class=&quot;important items&quot;&gt;3&lt;/li&gt;
+        &lt;li class=&quot;important&quot;&gt;4&lt;/li&gt;
+        &lt;li class=&quot;items&quot;&gt;5&lt;/li&gt;
+        &lt;li&gt;6&lt;/li&gt;
+        &lt;li&gt;7&lt;/li&gt;
+        &lt;li&gt;8&lt;/li&gt;
+        &lt;li&gt;9&lt;/li&gt;
+        &lt;li id=&quot;last&quot; class=&quot;last&quot;&gt;10&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre><p>效果如下：</p><p><img src=http://ww1.sinaimg.cn/large/9b71eb63gw1f10456gs96j20av01l74a.jpg alt=selector-base></p><h2 id=code-code>通配符选择器 <code>*</code></h2><p>通配符选择器是用来选择所有元素，，也可以选择某个元素下的所有元素。如：</p><pre><code class="line-numbers language-css">* {
+    marigin: 0;
+    padding: 0;
+}
+</code></pre><p>上面代码所表示的是，所有元素的 <code>margin</code> 和 <code>padding</code> 都设置为 0，另外一种就是选择某个元素下的所有元素：</p><pre><code class="line-numbers language-css">.demo * {
+    border:1px solid blue;
+}
+</code></pre><p>效果如下：</p><p><img src=http://ww4.sinaimg.cn/large/9b71eb63gw1f10456j467j20aw01pglm.jpg alt=selector-base></p><p>从上面的效果图看，只要是 <code>div.demo</code> 下的元素边框都加上了新的样式。</p><blockquote><p>所有浏览器支持通配符选择器。</p></blockquote><h2 id=code-E-code>元素选择器 <code>E</code></h2><p>元素选择器，是 CSS 选择器中最常见而且最基本的选择器。元素选择器其实就是文档的元素，如 <code>html</code>, <code>body</code>, <code>p</code>, <code>div</code> 等等，比如我们这个 demo 中元素包括了 <code>div</code>, <code>ul</code>, <code>li</code> 等。</p><pre><code class="line-numbers language-css">li {
+    background-color: grey;
+    color: orange;
+}
+</code></pre><p>上在表示选择页面的 <code>li</code> 元素，并设置了背景色和前景色，效果如下：</p><p><img src=http://ww4.sinaimg.cn/large/9b71eb63gw1f10457aapvj20au01iaa2.jpg alt=selector-base></p><blockquote><p>所有浏览器支持元素选择器 <code>E</code>。</p></blockquote><h2 id=code-className-code>类选择器 <code>.className</code></h2><p>类选择器是以一独立于文档元素的方式来指定样式，使用类选择器之前需要在 HTML 元素上定义类名，换句话说需要保证类名在 HTML 标记中存在，这样才能选择类，如：</p><pre><code class="line-numbers language-html">&lt;li class=&quot;active important items&quot;&gt;2&lt;/li&gt;
+</code></pre><p>共中 <code>active, important, items</code> 就是我们给 <code>li</code> 加上一个类名，以便类选择器能正常工作，从而更好的将类选择器的样式与元素相关联。</p><pre><code class="line-numbers language-css">.important {
+    font-weight: bold;
+    color: yellow;
+}
+</code></pre><p>上面代码表示是给有 <code>important</code> 类名的元素加上一个“字体为粗体，颜色为黄色”的样式，如</p><p><img src=http://ww2.sinaimg.cn/large/9b71eb63gw1f10457evxqj20au01j74a.jpg alt=selector-base></p><p>类选择器还可以结合元素选择器来使用，比如说，你文档中有好多个元素使用了类名 <code>items</code>，但你只想在 <code>p</code> 元素这个类名上修改样式，那么你可以这样进行选择并加上相应的样式：</p><pre><code class="line-numbers language-css">p.items {
+    color: red;
+}
+</code></pre><p>上面代码只会匹配 <code>class</code> 属性包含 <code>important</code> 的所有 <code>p</code> 元素，但其他任何类型的元素都不匹配，包括有 <code>items</code> 这个类名的元素，上面也说过了 <code>p.items</code> 只会对 <code>p</code> 元素并且是其有一个类名叫 <code>items</code>。不符合这两个条件的都不会被选择。</p><p>类选择器还有可以具备多类名，上面我们也看到了，我们 <code>li</code> 元素中同时有两个或多少类名，其中他们以空格隔开，那么选择器也可以使用多类连接在一起，如：</p><pre><code class="line-numbers language-css">.important {
+    font-weight: bold;
+}
+
+.active {
+    color: green;
+    background: lime;
+}
+
+.items {
+    color: #fff;
+    background: #000;
+}
+
+.important.items {
+    background: #ccc;
+}
+
+.first.last {
+    color: blue;
+}
+</code></pre><p>正如上面的代码所示，<code>.important.items</code> 这个选择器只对元素中同时包含了 <code>important</code> 和 <code>items</code> 两个类才能起作用，如图所示：</p><p><img src=http://ww2.sinaimg.cn/large/9b71eb63gw1f104583l6xj20av01i3yj.jpg alt=selector-base></p><p>有一点大家需要注意，如果一个多类选择器包含的类名中其中有一个不存在，那么这个选择器将无法找到相匹配的元素 比如说下在这句代码，他就无法到找相对应的的元素标签，因为我们列表中只有一个 <code>li.first</code> 和一个 <code>li.last</code>，不存在有一个叫 <code>li.first.last</code> 的列表项：</p><pre><code class="line-numbers language-css">.first.last {
+    color: blue;
+}
+</code></pre><blockquote><p>所有浏览器都支持类选择器，但多类选择器 <code>.className1.className2</code> 不被 IE6 支持。</p></blockquote><h2 id=ID-code-ID-code>ID 选择器 <code>#ID</code></h2><p>ID 选择器和上面说的类选择器是很相似的，在使用 ID 选择器之前也需要先在 HTML 文档中加注 <code>id</code> 属性，这样在样式选择器中才能找到相对应的元素，不同的是 ID 选择器是一个页面中<strong>唯一</strong>的值，我们在类使用时是在相对应的类名前加上一个 <code>.</code> 号（<code>.className</code>）而 ID 选择器是在名称前使用 <code>#</code> 如（<code>#id</code>）</p><pre><code class="line-numbers language-css">#first {
+    background: lime;
+    color: #000;
+}
+
+#last {
+    background: #000;
+    color: lime;
+}
+</code></pre><p>上在的代码就是选择了 <code>id</code> 为 <code>first</code> 和 <code>last</code> 的列表项，其效果如下</p><p><img src=http://ww1.sinaimg.cn/large/9b71eb63gw1f10458q5r5j20au01jmx6.jpg alt=selector-base></p><p><strong>注意</strong>：</p><ul><li>一个文档中一个 ID 选择器只充许使用一次，因为 ID 在页面中是唯一的</li><li>ID 选择器不能像类选择器一样多个合并使用，一个元素只能命名一个 id</li></ul><blockquote><p>所有浏览器都支持 ID 选择器。</p></blockquote><p>当元素在页面上唯一时，应使用 ID 选择器；公用的、类似的元素应使用类选择器。使用这两个选择器时，需要区分大小写。</p><h2 id=code-E-F-code>后代选择器 <code>E F</code></h2><p>后代选择器也被称作包含选择器,所起作用就是可以选择某元素的后代元素</p><p><code>E F</code>，前面 <code>E</code> 为祖先元素，<code>F</code> 为后代元素，所表达的意思就是选择了 <code>E</code> 元素的所有后代 <code>F</code> 元素，他们之间需要一个空格隔开。</p><p>此处不论 <code>F</code> 在 <code>E</code> 中有多少层关系，只要是其后代，无论是儿子还是孙子结点，都将被选中</p><pre><code class="line-numbers language-css">.demo li {
+    color: blue;
+}
+</code></pre><p>上面表示的是，选中 <code>.demo</code> 中所有的 <code>li</code> 元素</p><p><img src=http://ww1.sinaimg.cn/large/9b71eb63gw1f10459h1evj20au01j74a.jpg alt=selector-base></p><blockquote><p>所有浏览器都支的后代选择器。</p></blockquote><h2 id=code-E-gt-F-code>子元素选择器 <code>E &gt; F</code></h2><p>子元素选择器只能选择某元素的子元素。</p><p><code>E &gt; F</code> 所表示的是选择了 <code>E</code> 元素下的所有直接子后代元素 <code>F</code>。</p><p>这和后代选择器 <code>E F</code> 不同之处在于 <code>E &gt; F</code> 仅能选择直接的后代，即儿子。</p><pre><code class="line-numbers language-css">ul &gt; li {
+    background: green;
+    color: yellow;
+}
+</code></pre><p>上在代码表示选择 <code>ul</code> 下的所有子元素 <code>li</code>。如：</p><p><img src=http://ww1.sinaimg.cn/large/9b71eb63gw1f10459mh0mj20au01iq2x.jpg alt=selector-base></p><blockquote><p>IE6 不支持子元素选择器。</p></blockquote><h2 id=code-E-F-code>兄弟选择器 <code>E ~ F</code></h2><p><code>E</code> 和 <code>F</code> 元素的父元素相同，<code>F</code> 与 <code>E</code> 为兄弟关系，且 <code>F</code> 在 <code>E</code> 元素之后，那么 <code>E ~ F</code> 选择器将选择所有 <code>F</code> 元素。如：</p><pre><code class="line-numbers language-css">.active ~ li {
+    background: green;
+    color: yellow;
+    border: 1px solid #ccc;
+}
+</code></pre><p>上面的代码所表示的是，选择中了 <code>.active</code> 元素后面的所有兄弟元素 <code>li</code>，如图所示：</p><p><img src=http://ww4.sinaimg.cn/large/9b71eb63gw1f1045acfvxj20au01ljre.jpg alt=selector-base></p><blockquote><p>IE6 不支持这种选择器的用法。</p></blockquote><h2 id=code-E-F-code>相邻兄弟元素选择器 <code>E + F</code></h2><p>相邻兄弟选择器可以选择紧接相邻在另一元素后的元素，而且他们具有一个相同的父元素.</p><p><code>E</code>、<code>F</code> 两元素具有一个相同的父元素，而且 <code>F</code> 元素在 <code>E</code> 元素后面，而且相邻，这样我们就可以使用相邻兄弟元素选择器来选择 <code>F</code> 元素。</p><pre><code class="line-numbers language-css">.active + li {
+    background: green;
+    color: yellow;
+    border: 1px solid #ccc;
+}
+</code></pre><p>这句代码选择了 <code>.active</code> 后面相邻的 <code>li</code> 元素，注意了和 <code>.active</code> 后面相邻的元素仅只有一个的。如图：</p><p><img src=http://ww3.sinaimg.cn/large/9b71eb63gw1f1045at4z4j20au01jwei.jpg alt=selector-base></p><blockquote><p>IE 6不支持这个选择器</p></blockquote><p>兄弟选择器和相邻兄弟选择器不同之处在于，相邻兄弟选择器仅选择是元素的与其相邻仅第一个元素；而兄弟元素选择器，选中的是元素相邻的后面所有的兄弟元素。</p><h2 id=code-selector1-selector2-selectorN-code>分组选择器 <code>selector1, selector2, ..., selectorN</code></h2><p>分组选择器是将具有相同样式的元素分组在一起，每个选择器之间使用逗号 <code>,</code> 隔开。</p><p><code>selector1, selector2, ..., selectorN</code>，规则中包含多个不同的选择器，这些选择器对应的样式定义相同。</p><pre><code class="line-numbers language-css">.first, .last {
+    background: green;
+    color: yellow;
+    border: 1px solid #ccc;
+}
+</code></pre><p>因为 <code>.first</code> 和 <code>.last</code> 具有相同的样式效果，所以我们把他们写到一个组里来：</p><p><img src=http://ww4.sinaimg.cn/large/9b71eb63gw1f1045av8dcj20av01mwei.jpg alt=selector-base></p><blockquote><p>所有浏览器都支持群组选择器。</p></blockquote><h2>小结</h2><p>以上几种选择器是 CSS 中最常用的，通常需要结合起来使用，如：</p><pre><code class="line-numbers language-css">.demo li.important + li.items,
+#last {
+    background: green;
+    color: yellow;
+}
+</code></pre>
