@@ -20,10 +20,3 @@ render.table = (header, body) ->
       <tbody>' + body + '</tbody>\
     </table>\
   </div>'
-
-render.link = (href, title, text) ->
-  '<a href="' +
-  href.replace(/([^\:]+?)\.(md|markdown)(#\S+?)?$/, '$1$3') +
-  '"' +
-  (if title then ' title="' + title + '"' else '') +
-  ">#{text}</a>"
