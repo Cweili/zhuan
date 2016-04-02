@@ -4,7 +4,7 @@
 
 Compile your markdown document to html.
 
-一个将你编写的 Markdown 文档编译为 HTML 的工具。
+一个将你撰写的 Markdown 文档编译为 HTML 的工具。
 
 [![npm](https://nodei.co/npm/zhuan.png?downloads=true&stars=true)](https://www.npmjs.com/package/zhuan)
 
@@ -33,6 +33,6 @@ Default task is `server`, so you can just run `zhuan`.
 
 ## Options
 
-* `-f` or `--file` - Specific the markdown file. Default is all markdown files in current dir.
+* `-f` or `--file` - Specific the markdown file. Default is all markdown files in current dir. Default file extension `.md` or `.markdown` can be omitted.
 * `-o` or `--output` - Specific the output dir. Default is current dir.
 * `-p` or `--port` - Specific the server port. Default is 8000.
