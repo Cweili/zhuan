@@ -6,7 +6,7 @@ Compile your markdown document to html.
 
 一个将你撰写的 Markdown 文档编译为 HTML 的工具。
 
-[![npm](https://nodei.co/npm/zhuan.png?downloads=true&stars=true)](https://www.npmjs.com/package/zhuan)
+[![npm](https://nodei.co/npm/zhuan.png?downloads=true&stars=true)](https://www.npmjs.com/package/zhuan) [![Greenkeeper badge](https://badges.greenkeeper.io/Cweili/zhuan.svg)](https://greenkeeper.io/)
 
 ## Install
 
